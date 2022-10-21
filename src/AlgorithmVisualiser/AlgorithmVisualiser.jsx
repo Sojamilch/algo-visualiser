@@ -16,7 +16,13 @@ export default class AlgorithmVisualiser extends React.Component{
         for(let row = 0; row < 50; row++){
             const currentRow = [];
             for(let col = 0; col < 15; col++){
-                currentRow.push([]);
+                const currentNode = {
+                    col,
+                    row,
+                    isStart: row === 45 && col === 10,
+                    isFinish: row === 30 && col === 5,
+                };
+                currentRow.push(currentNode);
             }
             nodes.push(currentRow);
         }
@@ -29,8 +35,18 @@ export default class AlgorithmVisualiser extends React.Component{
         return(
             <div className="grid">
                 {nodes.map((row, rowIdx) => {
-                    return <div>
-                        {row.map((node, nodeIdx)=> <Node></Node>)}
+                    return <div key={rowIdx}>
+                        {row.map((node, nodeIdx)=> {
+                            const {isStart, isFinish} = node;
+                            return (
+                                <Node
+                                key={nodeIdx}
+                                isStart={isStart}
+                                isFinish={isFinish}
+                                ></Node>
+                            )
+
+                            })}
                     </div>
                 })}
             </div>
